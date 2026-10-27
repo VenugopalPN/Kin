@@ -1,0 +1,205 @@
+.front-page {
+  background: var(--paper);
+}
+
+.front-hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.front-hero-kicker {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.front-welcome {
+  margin: 0.7rem 0 0;
+  max-width: 28rem;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.front-hero-title {
+  margin-top: 0.75rem;
+}
+
+.front-give-box {
+  margin-top: 1.5rem;
+  padding: 1.5rem 1.6rem;
+  background: var(--mist);
+  border-radius: 16px;
+  max-width: 24rem;
+}
+
+.front-give-total {
+  margin: 0;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(1.9rem, 3vw, 2.4rem);
+  color: var(--sage-deep);
+}
+
+.front-give-total span {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.front-give-donors {
+  margin: 0 0 1.1rem;
+  font-size: 0.9rem;
+}
+
+.front-give-cta {
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+.front-mission {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: start;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.front-mission h2 {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.front-mission p {
+  margin: 0 0 1rem;
+  color: var(--muted);
+}
+
+.front-manage {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.front-also {
+  background: var(--mist);
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.front-also-title {
+  text-align: center;
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  margin-bottom: 2rem;
+}
+
+.front-also-list {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 1100px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.front-also-card {
+  background: var(--paper);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.front-also-photo {
+  height: 180px;
+  background: var(--banner, url('/cover.jpg')) center / cover no-repeat;
+}
+
+.front-also-body {
+  padding: 1.1rem 1.15rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  flex: 1;
+}
+
+.front-also-name {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.front-also-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.front-also-give {
+  width: auto;
+  align-self: flex-start;
+  min-height: 42px;
+  margin-top: auto;
+}
+
+.front-quote {
+  background: var(--rose);
+  color: var(--paper);
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
+}
+
+.front-quote > div {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.front-quote h2 {
+  color: var(--paper);
+  margin-bottom: 0.75rem;
+}
+
+.front-quote .accent {
+  color: var(--paper);
+}
+
+.front-quote p {
+  margin: 0;
+  max-width: 46rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.front-footer {
+  background: var(--mist);
+  color: var(--muted);
+  padding: 1.4rem clamp(1.5rem, 4vw, 3.5rem);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.front-footer-brand {
+  font-size: 1.4rem;
+  color: var(--sage-deep);
+}
+
+.front-footer a {
+  color: var(--sage-deep);
+}
+
+@media (max-width: 860px) {
+  .front-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .front-mission {
+    grid-template-columns: 1fr;
+  }
+}

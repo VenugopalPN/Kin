@@ -1,0 +1,349 @@
+.admin-page {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background: var(--paper);
+  --section-pad: 1.5rem;
+}
+
+.admin-back-link {
+  display: inline-block;
+  margin-bottom: 1.25rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.admin-back-link:hover {
+  color: var(--sage-deep);
+}
+
+/* Dashboard (fundraiser list / home) */
+
+.dashboard-section {
+  padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem) var(--section-pad);
+}
+
+.dashboard-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.dashboard-head .ribbon {
+  flex-shrink: 0;
+}
+
+.list-tiles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.1rem;
+  max-width: 1100px;
+}
+
+.list-tile {
+  background: var(--mist);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-tile-photo {
+  height: 140px;
+  background: var(--banner, url('/cover.jpg')) center / cover no-repeat;
+}
+
+.list-tile-body {
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  flex: 1;
+}
+
+.list-tile-body .campaign-manage-link {
+  margin-top: auto;
+}
+
+.campaign-list-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.3rem;
+  margin: 0 0 0.1rem;
+}
+
+.campaign-manage-link {
+  flex-shrink: 0;
+  width: auto;
+  min-height: 42px;
+  padding: 0 1.15rem;
+}
+
+/* Website preview, shown above the edit chat */
+
+.website-preview-strip {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--mist);
+  border-bottom: 1px solid var(--line);
+}
+
+.website-preview-photo {
+  width: 72px;
+  height: 56px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: var(--banner, url('/cover.jpg')) center / cover no-repeat;
+}
+
+.website-preview-name {
+  margin: 0;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.website-preview-line {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+}
+
+/* Create-a-fundraiser flow */
+
+.list-create {
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--paper);
+}
+
+.list-write {
+  align-self: flex-start;
+}
+
+.list-create-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.list-draft {
+  padding: 0 clamp(1.25rem, 4vw, 2.5rem) var(--section-pad);
+}
+
+.draft-empty,
+.draft-preview {
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background: var(--mist);
+  border-radius: 16px;
+  color: var(--ink);
+}
+
+.draft-empty {
+  color: var(--muted);
+}
+
+.draft-kicker {
+  margin: 0 0 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--rose-deep);
+}
+
+.draft-preview h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  margin-bottom: 0.75rem;
+}
+
+.draft-preview .field-label {
+  margin-top: 1.1rem;
+}
+
+.draft-preview .field-label:first-of-type {
+  margin-top: 0;
+}
+
+.draft-title-input {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.draft-letter-input {
+  min-height: 7rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  resize: vertical;
+}
+
+.draft-tiers-label {
+  margin-bottom: 0.5rem;
+}
+
+.draft-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.draft-tier {
+  padding: 0;
+}
+
+.draft-tier .text-input:first-child {
+  max-width: 7rem;
+  flex: 0 0 auto;
+}
+
+/* Manage a single fundraiser */
+
+.manage-hero-card {
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1.25rem, 4vw, 2.5rem) 0;
+}
+
+.admin-raised {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  color: var(--sage-deep);
+  margin: 0.4rem 0 0;
+}
+
+.manage-ribbon {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin: 1.5rem clamp(1.25rem, 4vw, 2.5rem) 0;
+  padding: 1.1rem 1.4rem;
+  background: var(--mist);
+  border-radius: 14px;
+}
+
+.manage-ribbon .field-label {
+  margin: 0 0 0.25rem;
+}
+
+.admin-share-url {
+  margin: 0;
+  font-weight: 600;
+  word-break: break-all;
+  user-select: all;
+}
+
+.manage-copy {
+  flex-shrink: 0;
+}
+
+.manage-body {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(1.5rem, 4vw, 3rem);
+  padding: clamp(1.75rem, 4vw, 3rem) clamp(1.25rem, 4vw, 2.5rem) var(--section-pad);
+}
+
+.manage-letter {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+.manage-body h2 {
+  margin: 1.5rem 0 0.8rem;
+  font-size: 1.6rem;
+}
+
+.admin-share-note {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.admin-share-open {
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.admin-tiers {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.admin-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--mist);
+  color: var(--ink);
+  border: none;
+  border-radius: 10px;
+  min-height: 52px;
+  padding: 0 1rem;
+  font-weight: 600;
+}
+
+.admin-tier:hover {
+  background: var(--line);
+}
+
+.admin-tier-change {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--sage-deep);
+}
+
+.admin-tier-edit {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+
+.admin-tier-edit .text-input {
+  flex: 1;
+  min-width: 100px;
+}
+
+.admin-tier-edit .big-button {
+  width: auto;
+}
+
+.admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-toggle input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--sage);
+}
+
+.manage-wall {
+  margin-top: 1rem;
+}
+
+@media (max-width: 1100px) {
+  .manage-body,
+  .platform-form-band {
+    grid-template-columns: 1fr;
+  }
+}

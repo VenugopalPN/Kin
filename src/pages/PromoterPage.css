@@ -1,0 +1,106 @@
+.promoter-page {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  background: var(--paper);
+}
+
+.promoter-note {
+  flex-shrink: 0;
+  background: var(--sage-deep);
+  color: var(--paper);
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 3rem);
+}
+
+.promoter-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  --section-pad: 1rem;
+}
+
+.phone-from {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.phone-message {
+  margin: 0;
+  max-width: 46rem;
+  font-size: clamp(1.3rem, 2.4vw, 1.8rem);
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.promoter-work {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 2rem;
+  padding: clamp(2.5rem, 6vw, 4rem) clamp(1.25rem, 4vw, 3rem) 1.5rem;
+}
+
+.promoter-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.promoter-ribbon-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0 clamp(1.25rem, 4vw, 3rem) 2rem;
+}
+
+.promoter-print {
+  width: auto;
+  min-height: 56px;
+}
+
+.promoter-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0 clamp(1.25rem, 4vw, 3rem) var(--section-pad);
+  background: var(--mist);
+  padding-top: 2rem;
+}
+
+.promoter-card {
+  background: var(--paper);
+  border-radius: 14px;
+  border-top: 4px solid var(--accent);
+  padding: 1.1rem 1.15rem;
+}
+
+.promoter-card-label {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.promoter-card-text {
+  margin: 0;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 800px) {
+  .promoter-work,
+  .promoter-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .promoter-ribbon-row .ribbon {
+    width: 100%;
+  }
+}

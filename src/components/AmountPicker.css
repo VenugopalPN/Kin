@@ -1,0 +1,32 @@
+.amount-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.amount-option {
+  min-height: 56px;
+  border-radius: 12px;
+  border: 1.5px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 1rem;
+  text-align: left;
+  padding: 0 1.1rem;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.amount-option:hover {
+  border-color: var(--sage);
+}
+
+.amount-option-selected,
+.amount-option-selected:hover {
+  background: var(--sage);
+  border-color: var(--sage);
+  color: var(--paper);
+}

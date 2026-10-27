@@ -1,0 +1,88 @@
+.platform-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem);
+  background: var(--paper);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.chat-kin {
+  margin: 0;
+  align-self: flex-start;
+  max-width: min(36rem, 100%);
+  padding: 0.85rem 1.1rem;
+  line-height: 1.45;
+  background: var(--mist);
+  color: var(--ink);
+  border-radius: 16px 16px 16px 4px;
+}
+
+.chat-compose {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.8rem;
+  max-width: 42rem;
+}
+
+.chat-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.chat-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.chat-line .text-input {
+  flex: 1;
+  min-width: 12rem;
+}
+
+.chat-send {
+  width: auto;
+}
+
+.chat-color {
+  width: 4.5rem;
+  height: 44px;
+  padding: 0.2rem;
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
+.chat-file {
+  font: inherit;
+  font-size: 0.95rem;
+}
+
+.chat-error {
+  margin: 0;
+  color: #8a2b2b;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 860px) {
+  .chat-send {
+    width: 100%;
+    clip-path: none;
+  }
+}

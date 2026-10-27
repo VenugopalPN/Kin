@@ -1,0 +1,18 @@
+.landing-grid {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.landing-card {
+  min-height: 220px;
+  align-self: stretch;
+}
+
+@media (max-width: 800px) {
+  .landing-grid {
+    grid-template-columns: 1fr;
+  }
+}
