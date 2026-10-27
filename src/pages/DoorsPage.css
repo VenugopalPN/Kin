@@ -1,0 +1,105 @@
+.doors-field {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--mist);
+  padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem) var(--section-pad);
+}
+
+@media (max-width: 860px) {
+  .doors-field {
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+}
+
+.doors-intro {
+  max-width: 1100px;
+  margin: 0 auto 2rem;
+}
+
+.doors-brand {
+  font-size: clamp(3.5rem, 10vw, 6rem);
+  line-height: 0.9;
+  color: var(--sage-deep);
+}
+
+.doors-tagline {
+  color: var(--muted);
+  max-width: 30rem;
+  margin: 0.5rem 0 0;
+}
+
+.doors-change-link {
+  display: inline-block;
+  margin-top: 0.75rem;
+  color: var(--rose-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.doors-grid,
+.doors-grid-compact {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.door-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1.6rem;
+  text-decoration: none;
+  min-height: 220px;
+  border-radius: 20px;
+  border: 1.5px solid transparent;
+  transition: transform 0.15s ease;
+}
+
+.door-ink {
+  background: var(--sage-deep);
+  color: var(--paper);
+}
+
+.door-green {
+  background: var(--paper);
+  color: var(--ink);
+  border-color: var(--line);
+}
+
+.door-amber {
+  background: var(--rose);
+  color: var(--paper);
+}
+
+.door-cream {
+  background: transparent;
+  color: var(--sage-deep);
+  border-color: var(--sage);
+}
+
+.door-title {
+  font-size: clamp(1.7rem, 3vw, 2.3rem);
+  margin-bottom: 0.35rem;
+}
+
+.door-sentence {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.door-card:hover {
+  transform: translateY(-3px);
+}

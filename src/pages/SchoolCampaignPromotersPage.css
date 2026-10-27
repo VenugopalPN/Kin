@@ -1,0 +1,283 @@
+.cp-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  max-width: 1100px;
+}
+
+.cp-intro {
+  margin: 0.3rem 0 0;
+  max-width: 40rem;
+}
+
+.cp-open-send {
+  flex-shrink: 0;
+  width: auto;
+  white-space: nowrap;
+}
+
+.cp-open-send-count {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+.cp-leaderboard-panel {
+  margin-top: 1.5rem;
+  max-width: 1100px;
+}
+
+.cp-panel {
+  background: var(--mist);
+  border-radius: 16px;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.cp-panel h2 {
+  font-size: 1.5rem;
+  margin: 0 0 0.9rem;
+}
+
+.cp-leaderboard {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cp-leader-row {
+  background: var(--paper);
+  border-radius: 10px;
+  padding: 0.55rem 0.85rem 0.7rem;
+}
+
+.cp-leader-top-line {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.cp-leader-top {
+  border-left: 4px solid var(--accent);
+}
+
+.cp-leader-bar-track {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.cp-leader-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--sage);
+  transition: width 0.5s ease;
+}
+
+.cp-leader-bar-fill-top {
+  background: var(--accent);
+}
+
+.cp-rank {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.cp-leader-top .cp-rank {
+  color: var(--accent);
+}
+
+.cp-leader-name {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.cp-top-badge {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--paper);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.cp-leader-gifts {
+  font-size: 0.8rem;
+}
+
+.cp-leader-total {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  color: var(--sage-deep);
+}
+
+.cp-send-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(43, 36, 32, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  z-index: 60;
+}
+
+.cp-send-modal {
+  background: var(--mist);
+  border-radius: 16px;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  width: min(32rem, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.cp-send-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1.25rem;
+}
+
+.cp-send-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.cp-send-note {
+  margin: -0.4rem 0 0.9rem;
+  font-size: 0.9rem;
+}
+
+.cp-send-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.cp-send-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 3.5rem;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.3rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.cp-send-row:last-child {
+  border-bottom: none;
+}
+
+.cp-check {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--sage);
+}
+
+.cp-check:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.cp-name {
+  min-height: 36px;
+  padding: 0.3rem 0.4rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  font: inherit;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.cp-name:hover {
+  background: var(--paper);
+}
+
+.cp-name:focus {
+  outline: none;
+  background: var(--paper);
+  border-color: var(--line);
+}
+
+.cp-status {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--sage-deep);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.cp-status::before {
+  content: '✓ ';
+}
+
+.cp-send-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cp-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.cp-sent-kicker,
+.cp-sent h2,
+.cp-sent > p {
+  margin: 0;
+}
+
+.cp-sent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  width: 100%;
+}
+
+.cp-sent-name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.cp-link {
+  display: block;
+  margin: 0.1rem 0 0;
+  font-size: 0.8rem;
+  word-break: break-all;
+  color: var(--sage-deep);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+  .cp-head {
+    flex-direction: column;
+  }
+
+  .cp-open-send {
+    width: 100%;
+  }
+}
