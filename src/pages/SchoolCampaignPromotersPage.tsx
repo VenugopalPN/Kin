@@ -15,6 +15,7 @@ import {
   markPromotersSent,
 } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
+import { absoluteAppUrl } from '../lib/publicUrl.ts';
 import { formatMoney } from '../lib/format.ts';
 import type { Promoter } from '../types.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
@@ -22,7 +23,7 @@ import './SchoolAdminPage.css';
 import './SchoolCampaignPromotersPage.css';
 
 function promoterLink(schoolSlug: string, promoter: Promoter) {
-  return `${window.location.origin}/s/${schoolSlug}/promoter/${promoter.campaignId}?promoter=${promoter.id}`;
+  return absoluteAppUrl(`/s/${schoolSlug}/promoter/${promoter.campaignId}?promoter=${promoter.id}`);
 }
 
 export function SchoolCampaignPromotersPage() {

@@ -4,6 +4,7 @@ import { Tracker } from '../components/Tracker.tsx';
 import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
 import { useKinData, findSchoolBySlug, findCampaignById, findPromoterById, updateCampaign } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
+import { absoluteAppUrl } from '../lib/publicUrl.ts';
 import { writeShareMessage, bestTimeSentence, todayAdviceSentence } from '../lib/ai.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import './PromoterPage.css';
@@ -36,7 +37,7 @@ export function PromoterPage() {
   const childFirstName = campaign.childFirstName;
   const found = findPromoterById(searchParams.get('promoter') ?? '');
   const promoter = found && found.campaignId === campaign.id ? found : undefined;
-  const link = `${window.location.origin}/s/${school.slug}/give/${campaign.id}${promoter ? `?promoter=${promoter.id}` : ''}`;
+  const link = absoluteAppUrl(`/s/${school.slug}/give/${campaign.id}${promoter ? `?promoter=${promoter.id}` : ''}`);
   const message = writeShareMessage({
     greetingName: campaign.greetingName,
     childFirstName: campaign.childFirstName,

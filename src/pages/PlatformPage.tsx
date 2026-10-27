@@ -5,6 +5,7 @@ import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
 import { WebsiteChat } from '../components/WebsiteChat.tsx';
 import { useKinData, createSchool } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
+import { absoluteAppUrl } from '../lib/publicUrl.ts';
 import { emptyDraft, type ChatDraft } from '../lib/websiteChat.ts';
 import type { School } from '../types.ts';
 import './PlatformPage.css';
@@ -96,8 +97,7 @@ export function PlatformPage() {
 }
 
 function CredentialEmail({ school, onDone }: { school: School; onDone: () => void }) {
-  const origin = window.location.origin;
-  const website = `${origin}/s/${school.slug}`;
+  const website = absoluteAppUrl(`/s/${school.slug}`);
   const signIn = `${website}/login`;
   const addressedTo = school.contactEmail.trim();
 
