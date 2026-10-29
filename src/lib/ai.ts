@@ -9,6 +9,8 @@ export interface DraftCampaign {
   amounts: AmountTier[];
   matchingSentence: string;
   thankYouLine: string;
+  /** Catalog game id, or null for direct donation only. Defaults to stars. */
+  gameId: string | null;
 }
 
 interface CauseTemplate {
@@ -86,6 +88,7 @@ export function draftCampaignFromCause(cause: string, schoolName: string): Draft
     ],
     matchingSentence: 'The organiser adds the same amount tonight.',
     thankYouLine: 'Thank you for helping our class.',
+    gameId: 'stars',
   };
 }
 

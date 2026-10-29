@@ -16,6 +16,7 @@ import {
   orgAdminSession,
 } from '../lib/store.ts';
 import { draftCampaignFromCause, type DraftCampaign } from '../lib/ai.ts';
+import { GAME_CATALOG } from '../lib/games.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { formatMoney } from '../lib/format.ts';
 import { emptyDraft, type ChatDraft } from '../lib/websiteChat.ts';
@@ -37,6 +38,7 @@ export function SchoolCampaignsPage() {
   const [letterOverride, setLetterOverride] = useState<string | null>(null);
   const [goalOverride, setGoalOverride] = useState<string | null>(null);
   const [amountsOverride, setAmountsOverride] = useState<AmountTier[] | null>(null);
+  const [gameIdOverride, setGameIdOverride] = useState<string | null | undefined>(undefined);
   const autoDraft = useMemo(() => draftCampaignFromCause(cause, school?.name ?? ''), [cause, school?.name]);
 
   useEffect(() => {
@@ -72,6 +74,7 @@ export function SchoolCampaignsPage() {
     letterBody: letterOverride ?? autoDraft.letterBody,
     goal: goalOverride !== null && Number(goalOverride) > 0 ? Number(goalOverride) : autoDraft.goal,
     amounts: amountsOverride ?? autoDraft.amounts,
+    gameId: gameIdOverride === undefined ? autoDraft.gameId : gameIdOverride,
   };
   const goalInputValue = goalOverride ?? String(draft.goal);
 
@@ -82,6 +85,7 @@ export function SchoolCampaignsPage() {
       setLetterOverride(null);
       setGoalOverride(null);
       setAmountsOverride(null);
+      setGameIdOverride(undefined);
     }
   }
 
@@ -97,6 +101,7 @@ export function SchoolCampaignsPage() {
     setLetterOverride(null);
     setGoalOverride(null);
     setAmountsOverride(null);
+    setGameIdOverride(undefined);
   }
 
   function handleCreate(event: FormEvent) {
@@ -244,6 +249,7 @@ export function SchoolCampaignsPage() {
                       onLetterChange={setLetterOverride}
                       onGoalChange={setGoalOverride}
                       onTierChange={handleTierChange}
+                      onGameIdChange={setGameIdOverride}
                     />
                   </section>
                 </>
@@ -266,6 +272,7 @@ interface DraftPreviewProps {
   onLetterChange: (value: string) => void;
   onGoalChange: (value: string) => void;
   onTierChange: (index: number, patch: Partial<AmountTier>) => void;
+  onGameIdChange: (value: string | null) => void;
 }
 
 function DraftPreview({
@@ -276,6 +283,7 @@ function DraftPreview({
   onLetterChange,
   onGoalChange,
   onTierChange,
+  onGameIdChange,
 }: DraftPreviewProps) {
   if (!cause.trim()) {
     return <p className="draft-empty">Start typing. The fundraiser appears here.</p>;
@@ -336,6 +344,41 @@ function DraftPreview({
               aria-label={`Tier ${index + 1} label`}
             />
           </div>
+        ))}
+      </div>
+
+      <p className="field-label draft-tiers-label" id="draft-game-label">
+        Donor game
+      </p>
+      <div className="draft-games" role="radiogroup" aria-labelledby="draft-game-label">
+        <label className={`draft-game-option${draft.gameId === null ? ' is-selected' : ''}`}>
+          <input
+            type="radio"
+            name="draft-game"
+            checked={draft.gameId === null}
+            onChange={() => onGameIdChange(null)}
+          />
+          <span className="draft-game-copy">
+            <span className="draft-game-name">None (direct only)</span>
+            <span className="draft-game-blurb">Donors pick an amount — no game.</span>
+          </span>
+        </label>
+        {GAME_CATALOG.map((game) => (
+          <label
+            key={game.id}
+            className={`draft-game-option${draft.gameId === game.id ? ' is-selected' : ''}`}
+          >
+            <input
+              type="radio"
+              name="draft-game"
+              checked={draft.gameId === game.id}
+              onChange={() => onGameIdChange(game.id)}
+            />
+            <span className="draft-game-copy">
+              <span className="draft-game-name">{game.name}</span>
+              <span className="draft-game-blurb">{game.blurb}</span>
+            </span>
+          </label>
         ))}
       </div>
     </div>

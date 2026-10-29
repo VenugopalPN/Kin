@@ -26,7 +26,7 @@ This is the list of everything this campaign has running: a tile each for **Book
 - **Hide dollar amounts on the leaderboard** — a switch, not a setting to dig for.
 - The **thank-you leaderboard sits right there in the preview**, next to the campaign's public page — this screen is the only place anyone sees it now. **Show the wall** still fills the screen edge to edge with the top gift playing in large, for projecting. Esc or **Close** returns.
 
-**Create a fundraiser** opens the one-question setup. Try "new basketball hoop" or "winter jackets" and watch the title, letter, goal, and three amounts write themselves, then land straight on that new fundraiser's Manage screen.
+**Create a fundraiser** opens the one-question setup. Try "new basketball hoop" or "winter jackets" and watch the title, letter, goal, and three amounts write themselves. Under the gift amounts, point at **Donor game**: none (direct only), or one from the small catalog (stars, hearts, balloons). Publish lands straight on that new fundraiser's Manage screen.
 
 ## 3. Promoter — send the note
 
@@ -36,11 +36,11 @@ Open it from the copied promoter link, or from **Open** on the Manage screen. Th
 
 Reached by tapping **Give to this fundraiser** on the public page (`/s/wattle-primary`), or the link a promoter sent. On the website that ribbon crosses the bottom of the photo. The letter sits in the white band under the photo. Other fundraisers are photo tiles under the heading "Also raising right now." A dark band quotes the child's letter.
 
-The one page an aunty or uncle has to use. The bar up top says only **Give**, with the line "You are giving to this fundraiser." The photo fills the top, with "Hi Aunty June" over it and June in orange. Under the photo: the three named amounts, **Add a star** as the optional play (a few taps, $5 a star, **Skip** lands on the same amounts), one first name, and an orange **Give** ribbon. There is no wall here and no running total by name — a donor sees only their own "Thank you, {name}," not who else gave or how much. **Give again** resets the form so you can repeat the moment. The leaderboard is for the campaign owner only, back on the Manage screen.
+The one page an aunty or uncle has to use. The bar up top says only **Give**, with the line "You are giving to this fundraiser." The photo fills the top, with "Hi Aunty June" over it and June in orange. Under the photo: when this fundraiser has a game, two clear choices — **Give directly** (the three named amounts) or **Play and give** (the campaign’s chosen light game, a few taps at $5 each; **Skip** returns to the choice). Then one first name and an orange **Give** ribbon. There is no wall here and no running total by name — a donor sees only their own "Thank you, {name}," not who else gave or how much. **Give again** resets the form so you can repeat the moment. The leaderboard is for the campaign owner only, back on the Manage screen.
 
 ## If asked about the game
 
-"Add a star" is the whole game: a few large taps, never a wall between tapping and giving. **Skip** always works. There is no second, harder game — that was deliberate.
+The owner picks the game when starting the fundraiser. Each game is the same bar: a few large taps, never a wall between tapping and giving. **Skip** always works. There is no harder, score-chasing game — that was deliberate. The catalog can grow later; the give page only loads the one game this fundraiser chose.
 
 ## If asked about AI
 

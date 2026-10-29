@@ -17,6 +17,8 @@ export interface Campaign {
   childFirstName: string;
   greetingName: string;
   thankYouLine: string;
+  /** Catalog game id, or null for direct donation only. */
+  gameId: string | null;
   publishedAt: string;
 }
 

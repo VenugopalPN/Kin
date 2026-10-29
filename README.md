@@ -20,7 +20,7 @@ The dev server runs at [http://127.0.0.1:4322](http://127.0.0.1:4322).
 | Create a website | `/platform` | Anyone creates a website from a **Name** and a **Place**; its **Website** link opens the fundraiser list |
 | Start the fundraiser | `/s/:schoolSlug/admin` → `/s/:schoolSlug/admin/:campaignId` | The campaign owner sees every fundraiser, creates one with **Create a fundraiser**, and manages each one |
 | Send the note | `/s/:schoolSlug/promoter/:campaignId` | The promoter opens the link, customizes the note, and sends it on |
-| Give | `/s/:schoolSlug/give/:campaignId` | Someone gives, with an optional star game first |
+| Give | `/s/:schoolSlug/give/:campaignId` | Someone gives directly, or plays the campaign’s chosen game then gives |
 
 The public page lives at `/s/:schoolSlug`.
 
@@ -28,7 +28,7 @@ A bar at the top of every page names only that page and gives it one sentence. T
 
 ## Multiple fundraisers, one leaderboard
 
-One website can run several fundraisers at once — `/s/:schoolSlug/admin` is a list of all of them, each with its own **Manage** screen. **Create a fundraiser** opens the one-question writer. Once a fundraiser exists, Manage shows **Link for the promoter**: the owner copies that address and gives it to the promoter. The promoter customizes the note and sends it on. The note contains the give page (`/s/:schoolSlug/give/:campaignId`). The public page shows the most recently started fundraiser as the hero, and lists any others underneath. Creating a website on `/platform` only adds the page; it does not start a fundraiser.
+One website can run several fundraisers at once — `/s/:schoolSlug/admin` is a list of all of them, each with its own **Manage** screen. **Create a fundraiser** opens the one-question writer; the draft also lets the owner pick a **donor game** from a small catalog (or none). Once a fundraiser exists, Manage shows **Link for the promoter**: the owner copies that address and gives it to the promoter. The promoter customizes the note and sends it on. The note contains the give page (`/s/:schoolSlug/give/:campaignId`). On that page, donors can **Give directly** with the amount tiers, or **Play and give** when a game was chosen. The public page shows the most recently started fundraiser as the hero, and lists any others underneath. Creating a website on `/platform` only adds the page; it does not start a fundraiser.
 
 The thank-you leaderboard lives only on the admin's Manage screen (inline in the preview, and full-screen via **Show the wall**). The Family give page never shows it — a donor sees just their own "Thank you," not a wall of other names or amounts.
 

@@ -26,6 +26,14 @@ function normalizeSchool(school: School): School {
   };
 }
 
+function normalizeCampaign(campaign: Campaign): Campaign {
+  // Older demos always offered the star game; keep that unless explicitly cleared.
+  return {
+    ...campaign,
+    gameId: campaign.gameId === undefined ? 'stars' : campaign.gameId,
+  };
+}
+
 function load(): KinData {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -35,6 +43,7 @@ function load(): KinData {
     return {
       ...parsed,
       schools: parsed.schools.map(normalizeSchool),
+      campaigns: parsed.campaigns.map(normalizeCampaign),
       gifts: parsed.gifts.map((gift) => ({ ...gift, promoterId: gift.promoterId ?? '' })),
       promoters: parsed.promoters ?? [],
     };
@@ -179,6 +188,7 @@ export function publishCampaign(school: School, cause: string, draft: DraftCampa
     childFirstName: 'your child',
     greetingName: 'Aunty June',
     thankYouLine: draft.thankYouLine,
+    gameId: draft.gameId,
     publishedAt: new Date().toISOString(),
   };
   data = { ...data, campaigns: [...data.campaigns, campaign] };

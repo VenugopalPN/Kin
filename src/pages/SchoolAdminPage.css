@@ -206,6 +206,49 @@
   flex: 0 0 auto;
 }
 
+.draft-games {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.draft-game-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  cursor: pointer;
+  background: var(--paper);
+}
+
+.draft-game-option.is-selected {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.draft-game-option input {
+  margin-top: 0.2rem;
+  accent-color: var(--accent);
+}
+
+.draft-game-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.draft-game-name {
+  font-weight: 700;
+}
+
+.draft-game-blurb {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
 /* Manage a single fundraiser */
 
 .manage-hero-card {

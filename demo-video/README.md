@@ -79,7 +79,7 @@ Scenes depend on each other in order, so the video is always recorded in one con
 - The Licensed card
 - Copy the message, which would use the clipboard
 - Print the note, which would open a print window
-- Add a star instead
+- Play and give / Give directly
 - Read this to me
 - Sign out
 
