@@ -12,6 +12,31 @@ import './FamilyPage.css';
 
 type GivePath = 'choose' | 'direct' | 'play' | 'played';
 
+function AmountEditor({ amount, onChange }: { amount: number | null; onChange: (value: number | null) => void }) {
+  return (
+    <div className="family-amount-edit">
+      <label className="field-label" htmlFor="gift-amount">
+        Edit your amount
+      </label>
+      <div className="family-amount-edit-row">
+        <span className="family-amount-prefix">$</span>
+        <input
+          id="gift-amount"
+          className="text-input family-amount-input"
+          type="number"
+          min="1"
+          inputMode="numeric"
+          value={amount ?? ''}
+          onChange={(e) => {
+            const next = Number(e.target.value);
+            onChange(e.target.value === '' ? null : next > 0 ? next : null);
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+
 function GiveDetails({
   donorName,
   onNameChange,
@@ -63,6 +88,7 @@ export function FamilyPage() {
   const [donorName, setDonorName] = useState('');
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [stars, setStars] = useState(0);
+  const [gameAmount, setGameAmount] = useState(0);
   const [givePath, setGivePath] = useState<GivePath>('choose');
   const [step, setStep] = useState<'give' | 'thanks'>('give');
   const [lastDonor, setLastDonor] = useState('');
@@ -92,6 +118,7 @@ export function FamilyPage() {
 
   function handleGameDone(amount: number, units: number) {
     setSelectedAmount(amount);
+    setGameAmount(amount);
     setStars(units);
     setGivePath('played');
   }
@@ -184,12 +211,13 @@ export function FamilyPage() {
               <GameComponent onDone={handleGameDone} onSkip={handleChangePath} />
             )}
 
-            {showPlayedForm && selectedAmount ? (
+            {showPlayedForm ? (
               <>
                 <button type="button" className="link-button family-change-path" onClick={handleChangePath}>
                   Choose how to give again
                 </button>
-                <p className="family-game-amount">Your gift from the game: ${selectedAmount}</p>
+                <p className="family-game-amount">Your gift from the game: ${gameAmount}</p>
+                <AmountEditor amount={selectedAmount} onChange={setSelectedAmount} />
                 <GiveDetails
                   donorName={donorName}
                   onNameChange={setDonorName}
@@ -215,6 +243,7 @@ export function FamilyPage() {
                     setStars(0);
                   }}
                 />
+                <AmountEditor amount={selectedAmount} onChange={setSelectedAmount} />
                 <GiveDetails
                   donorName={donorName}
                   onNameChange={setDonorName}

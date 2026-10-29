@@ -109,6 +109,21 @@
   font-weight: 700;
 }
 
+.family-amount-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.family-amount-prefix {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.family-amount-input {
+  max-width: 9rem;
+}
+
 .family-matching {
   color: var(--muted);
   font-size: 0.95rem;
