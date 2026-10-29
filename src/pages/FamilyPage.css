@@ -80,6 +80,35 @@
   align-self: flex-start;
 }
 
+.family-path-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.family-path-label {
+  margin: 0 0 0.15rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.family-path-button {
+  width: 100%;
+  min-height: 48px;
+}
+
+.family-change-path {
+  align-self: flex-start;
+}
+
+.family-game-amount {
+  margin: 0;
+  font-weight: 700;
+}
+
 .family-matching {
   color: var(--muted);
   font-size: 0.95rem;

@@ -1,11 +1,11 @@
-.star-game {
+.tap-units-game {
   background: var(--charcoal);
   border-radius: 16px;
   padding: 1.5rem;
   margin-top: 0.25rem;
 }
 
-.star-game-intro {
+.tap-units-intro {
   color: rgba(255, 255, 255, 0.85);
   margin: 0 0 0.75rem;
   font-size: 0.78rem;
@@ -14,14 +14,14 @@
   text-transform: uppercase;
 }
 
-.star-sky {
+.tap-units-row {
   display: flex;
   gap: 0.5rem;
   justify-content: center;
   padding: 0.5rem 0 0.75rem;
 }
 
-.star {
+.tap-unit {
   background: none;
   border: none;
   font-size: 2.3rem;
@@ -29,44 +29,45 @@
   color: rgba(255, 255, 255, 0.22);
   min-width: 48px;
   min-height: 48px;
+  cursor: pointer;
 }
 
-.star-lit {
+.tap-unit-lit {
   color: var(--accent);
 }
 
-.star-game-total {
+.tap-units-total {
   text-align: center;
   color: var(--paper);
   font-weight: 700;
   margin: 0 0 1rem;
 }
 
-.star-game-actions {
+.tap-units-actions {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
 }
 
-.star-game-actions .big-button.primary {
+.tap-units-actions .big-button.primary {
   background: var(--accent);
   color: var(--paper);
   border-color: var(--accent);
 }
 
-.star-game-actions .big-button.primary:hover {
+.tap-units-actions .big-button.primary:hover {
   background: transparent;
   color: var(--accent);
   border-color: var(--accent);
 }
 
-.star-game-actions .big-button.primary:disabled,
-.star-game-actions .big-button.primary:disabled:hover {
+.tap-units-actions .big-button.primary:disabled,
+.tap-units-actions .big-button.primary:disabled:hover {
   background: var(--accent);
   color: var(--paper);
 }
 
-.star-game-actions .link-button {
+.tap-units-actions .link-button {
   color: rgba(255, 255, 255, 0.8);
 }

@@ -3,12 +3,14 @@ import { useParams, useSearchParams } from 'react-router-dom';
 import { Tracker } from '../components/Tracker.tsx';
 import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
 import { AmountPicker } from '../components/AmountPicker.tsx';
-import { StarGame } from '../components/StarGame.tsx';
 import { ProgressBar } from '../components/ProgressBar.tsx';
 import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, addGift } from '../lib/store.ts';
+import { findGame } from '../lib/games.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import './FamilyPage.css';
+
+type GivePath = 'choose' | 'direct' | 'play';
 
 export function FamilyPage() {
   useKinData();
@@ -19,7 +21,7 @@ export function FamilyPage() {
   const [donorName, setDonorName] = useState('');
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [stars, setStars] = useState(0);
-  const [showStarGame, setShowStarGame] = useState(false);
+  const [givePath, setGivePath] = useState<GivePath>('choose');
   const [step, setStep] = useState<'give' | 'thanks'>('give');
   const [lastDonor, setLastDonor] = useState('');
 
@@ -42,11 +44,14 @@ export function FamilyPage() {
   }
 
   const raised = giftsForCampaign(campaign.id).reduce((sum, g) => sum + g.amount, 0);
+  const game = findGame(campaign.gameId);
+  const offersGame = Boolean(game);
+  const activePath: GivePath = offersGame ? givePath : 'direct';
 
-  function handleStarDone(amount: number, starCount: number) {
+  function handleGameDone(amount: number, units: number) {
     setSelectedAmount(amount);
-    setStars(starCount);
-    setShowStarGame(false);
+    setStars(units);
+    setGivePath('direct');
   }
 
   function handleGive(event: FormEvent) {
@@ -62,6 +67,25 @@ export function FamilyPage() {
     setDonorName('');
     setSelectedAmount(null);
     setStars(0);
+    setGivePath(offersGame ? 'choose' : 'direct');
+  }
+
+  function handleChooseDirect() {
+    setStars(0);
+    setSelectedAmount(null);
+    setGivePath('direct');
+  }
+
+  function handleChoosePlay() {
+    setStars(0);
+    setSelectedAmount(null);
+    setGivePath('play');
+  }
+
+  function handleChangePath() {
+    setStars(0);
+    setSelectedAmount(null);
+    setGivePath('choose');
   }
 
   function handleReadAloud() {
@@ -70,6 +94,11 @@ export function FamilyPage() {
     const text = `Hi ${campaign!.greetingName}. ${campaign!.childFirstName}'s class is raising money for ${campaign!.cause || campaign!.title}. ${campaign!.matchingSentence}`;
     window.speechSynthesis.speak(new SpeechSynthesisUtterance(text));
   }
+
+  const GameComponent = game?.Component;
+  const showAmountForm = activePath === 'direct' || !offersGame;
+  const showPathChoice = offersGame && activePath === 'choose';
+  const showPlay = offersGame && activePath === 'play' && GameComponent;
 
   return (
     <div className="app-field family-page" style={schoolLook(school)}>
@@ -96,39 +125,67 @@ export function FamilyPage() {
       <section className="family-band">
         {step === 'give' ? (
           <form onSubmit={handleGive} className="family-form">
-            <AmountPicker amounts={campaign.amounts} selected={selectedAmount ?? -1} onSelect={setSelectedAmount} />
-
-            {showStarGame ? (
-              <StarGame onDone={handleStarDone} onSkip={() => setShowStarGame(false)} />
-            ) : (
-              <button type="button" className="link-button family-star-link" onClick={() => setShowStarGame(true)}>
-                Add a star instead
-              </button>
+            {showPathChoice && (
+              <div className="family-path-choice" role="group" aria-label="How would you like to give?">
+                <p className="family-path-label">How would you like to give?</p>
+                <button type="button" className="big-button ghost family-path-button" onClick={handleChooseDirect}>
+                  Give directly
+                </button>
+                <button type="button" className="big-button primary family-path-button" onClick={handleChoosePlay}>
+                  Play and give
+                </button>
+              </div>
             )}
 
-            <div>
-              <label className="field-label" htmlFor="donor-name">
-                Your first name
-              </label>
-              <input
-                id="donor-name"
-                className="text-input"
-                value={donorName}
-                onChange={(e) => setDonorName(e.target.value)}
-                placeholder="June"
-                required
-              />
-            </div>
+            {showPlay && (
+              <GameComponent onDone={handleGameDone} onSkip={handleChangePath} />
+            )}
 
-            <p className="family-matching">{campaign.matchingSentence}</p>
+            {showAmountForm && (
+              <>
+                {offersGame && (
+                  <button type="button" className="link-button family-change-path" onClick={handleChangePath}>
+                    Choose how to give again
+                  </button>
+                )}
+                {stars > 0 && selectedAmount ? (
+                  <p className="family-game-amount">
+                    Your gift from the game: ${selectedAmount}
+                  </p>
+                ) : null}
+                <AmountPicker
+                  amounts={campaign.amounts}
+                  selected={selectedAmount ?? -1}
+                  onSelect={(value) => {
+                    setSelectedAmount(value);
+                    setStars(0);
+                  }}
+                />
+                <div>
+                  <label className="field-label" htmlFor="donor-name">
+                    Your first name
+                  </label>
+                  <input
+                    id="donor-name"
+                    className="text-input"
+                    value={donorName}
+                    onChange={(e) => setDonorName(e.target.value)}
+                    placeholder="June"
+                    required
+                  />
+                </div>
 
-            <button type="submit" className="ribbon family-give" disabled={!selectedAmount}>
-              Give
-            </button>
+                <p className="family-matching">{campaign.matchingSentence}</p>
 
-            <button type="button" className="link-button" onClick={handleReadAloud}>
-              Read this to me
-            </button>
+                <button type="submit" className="ribbon family-give" disabled={!selectedAmount}>
+                  Give
+                </button>
+
+                <button type="button" className="link-button" onClick={handleReadAloud}>
+                  Read this to me
+                </button>
+              </>
+            )}
           </form>
         ) : (
           <div className="family-thanks">
@@ -141,6 +198,7 @@ export function FamilyPage() {
         )}
       </section>
       </div>
+
       <ResetDemoButton />
     </div>
   );

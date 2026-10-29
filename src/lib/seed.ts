@@ -43,6 +43,7 @@ export function buildSeedData(): KinData {
         childFirstName: 'Asha',
         greetingName: 'Aunty June',
         thankYouLine: 'Thank you for helping our class.',
+        gameId: 'stars',
         publishedAt: minutesAgo(480),
       },
       {
@@ -64,6 +65,7 @@ export function buildSeedData(): KinData {
         childFirstName: 'Leo',
         greetingName: 'Uncle Sam',
         thankYouLine: 'Thank you for helping our team.',
+        gameId: 'stars',
         publishedAt: minutesAgo(120),
       },
     ],
