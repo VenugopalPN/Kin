@@ -10,7 +10,49 @@ import { schoolLook } from '../lib/schoolLook.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import './FamilyPage.css';
 
-type GivePath = 'choose' | 'direct' | 'play';
+type GivePath = 'choose' | 'direct' | 'play' | 'played';
+
+function GiveDetails({
+  donorName,
+  onNameChange,
+  matchingSentence,
+  selectedAmount,
+  onReadAloud,
+}: {
+  donorName: string;
+  onNameChange: (value: string) => void;
+  matchingSentence: string;
+  selectedAmount: number | null;
+  onReadAloud: () => void;
+}) {
+  return (
+    <>
+      <div>
+        <label className="field-label" htmlFor="donor-name">
+          Your first name
+        </label>
+        <input
+          id="donor-name"
+          className="text-input"
+          value={donorName}
+          onChange={(e) => onNameChange(e.target.value)}
+          placeholder="June"
+          required
+        />
+      </div>
+
+      <p className="family-matching">{matchingSentence}</p>
+
+      <button type="submit" className="ribbon family-give" disabled={!selectedAmount}>
+        Give
+      </button>
+
+      <button type="button" className="link-button" onClick={onReadAloud}>
+        Read this to me
+      </button>
+    </>
+  );
+}
 
 export function FamilyPage() {
   useKinData();
@@ -51,7 +93,7 @@ export function FamilyPage() {
   function handleGameDone(amount: number, units: number) {
     setSelectedAmount(amount);
     setStars(units);
-    setGivePath('direct');
+    setGivePath('played');
   }
 
   function handleGive(event: FormEvent) {
@@ -96,7 +138,8 @@ export function FamilyPage() {
   }
 
   const GameComponent = game?.Component;
-  const showAmountForm = activePath === 'direct' || !offersGame;
+  const showDirectForm = activePath === 'direct' || !offersGame;
+  const showPlayedForm = activePath === 'played';
   const showPathChoice = offersGame && activePath === 'choose';
   const showPlay = offersGame && activePath === 'play' && GameComponent;
 
@@ -141,18 +184,29 @@ export function FamilyPage() {
               <GameComponent onDone={handleGameDone} onSkip={handleChangePath} />
             )}
 
-            {showAmountForm && (
+            {showPlayedForm && selectedAmount ? (
+              <>
+                <button type="button" className="link-button family-change-path" onClick={handleChangePath}>
+                  Choose how to give again
+                </button>
+                <p className="family-game-amount">Your gift from the game: ${selectedAmount}</p>
+                <GiveDetails
+                  donorName={donorName}
+                  onNameChange={setDonorName}
+                  matchingSentence={campaign.matchingSentence}
+                  selectedAmount={selectedAmount}
+                  onReadAloud={handleReadAloud}
+                />
+              </>
+            ) : null}
+
+            {showDirectForm && (
               <>
                 {offersGame && (
                   <button type="button" className="link-button family-change-path" onClick={handleChangePath}>
                     Choose how to give again
                   </button>
                 )}
-                {stars > 0 && selectedAmount ? (
-                  <p className="family-game-amount">
-                    Your gift from the game: ${selectedAmount}
-                  </p>
-                ) : null}
                 <AmountPicker
                   amounts={campaign.amounts}
                   selected={selectedAmount ?? -1}
@@ -161,29 +215,13 @@ export function FamilyPage() {
                     setStars(0);
                   }}
                 />
-                <div>
-                  <label className="field-label" htmlFor="donor-name">
-                    Your first name
-                  </label>
-                  <input
-                    id="donor-name"
-                    className="text-input"
-                    value={donorName}
-                    onChange={(e) => setDonorName(e.target.value)}
-                    placeholder="June"
-                    required
-                  />
-                </div>
-
-                <p className="family-matching">{campaign.matchingSentence}</p>
-
-                <button type="submit" className="ribbon family-give" disabled={!selectedAmount}>
-                  Give
-                </button>
-
-                <button type="button" className="link-button" onClick={handleReadAloud}>
-                  Read this to me
-                </button>
+                <GiveDetails
+                  donorName={donorName}
+                  onNameChange={setDonorName}
+                  matchingSentence={campaign.matchingSentence}
+                  selectedAmount={selectedAmount}
+                  onReadAloud={handleReadAloud}
+                />
               </>
             )}
           </form>
