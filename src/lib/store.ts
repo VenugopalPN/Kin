@@ -61,7 +61,22 @@ function persist() {
   } catch {
     // Storage can fail (private browsing, quota). The demo still works in memory.
   }
+  notify();
+}
+
+function notify() {
   listeners.forEach((listener) => listener());
+}
+
+/** Keeps every open tab on the same data: another tab's save replaces ours. */
+export function handleStorageEvent(event: Pick<StorageEvent, 'key'>) {
+  if (event.key !== STORAGE_KEY && event.key !== null) return;
+  data = load();
+  notify();
+}
+
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', handleStorageEvent);
 }
 
 function subscribe(listener: () => void): () => void {
