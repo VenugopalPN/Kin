@@ -380,3 +380,20 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+.field-error {
+  margin: 0.5rem 0 0;
+  color: var(--rose-darker);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.field-error::before {
+  content: '! ';
+  font-weight: 800;
+}
+
+.text-input[aria-invalid='true'] {
+  border-color: var(--rose-darker);
+  border-width: 2px;
+}
