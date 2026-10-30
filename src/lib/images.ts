@@ -24,3 +24,20 @@ export function readScaledImage(file: File, maxWidth: number, type: 'image/jpeg'
     reader.readAsDataURL(file);
   });
 }
+
+export interface StockPhoto {
+  id: string;
+  label: string;
+  /** Root path; schoolLook adds the deploy prefix when it is shown. */
+  src: string;
+}
+
+/** Ready-made banners, so nobody has to find and upload a photo to get a good-looking page. */
+export const STOCK_PHOTOS: StockPhoto[] = [
+  { id: 'books', label: 'Books', src: '/cover.jpg' },
+  { id: 'playground', label: 'Playground', src: '/stock/playground.jpg' },
+  { id: 'sports', label: 'Sports', src: '/stock/sports.jpg' },
+  { id: 'winter', label: 'Warm clothes', src: '/stock/winter.jpg' },
+  { id: 'art-music', label: 'Art and music', src: '/stock/art-music.jpg' },
+  { id: 'garden', label: 'Garden', src: '/stock/garden.jpg' },
+];

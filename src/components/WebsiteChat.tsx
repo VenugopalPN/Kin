@@ -1,5 +1,6 @@
 import { useState, type FormEvent, type ReactNode } from 'react';
-import { readScaledImage } from '../lib/images.ts';
+import { readScaledImage, STOCK_PHOTOS } from '../lib/images.ts';
+import { appPath } from '../lib/publicUrl.ts';
 import { DEFAULT_ACCENT } from '../lib/schoolLook.ts';
 import {
   canGoBack,
@@ -10,6 +11,7 @@ import {
   replyToColor,
   replyToImage,
   replyToSkip,
+  replyToStockPhoto,
   replyToText,
   type ChatDraft,
   type ChatMode,
@@ -164,10 +166,33 @@ export function WebsiteChat({
           </div>
         )}
 
+        {step === 'banner' && (
+          <div className="chat-photos" role="group" aria-label="Photos to choose from">
+            {STOCK_PHOTOS.map((photo) => {
+              const chosen = draft.bannerImage === photo.src;
+              return (
+                <button
+                  key={photo.id}
+                  type="button"
+                  className={chosen ? 'chat-photo chat-photo-chosen' : 'chat-photo'}
+                  aria-pressed={chosen}
+                  onClick={() => {
+                    const result = replyToStockPhoto(draft, photo);
+                    advance(result.next, result.draft);
+                  }}
+                >
+                  <img className="chat-photo-img" src={appPath(photo.src)} alt="" />
+                  <span className="chat-photo-label">{photo.label}</span>
+                </button>
+              );
+            })}
+          </div>
+        )}
+
         {(step === 'banner' || step === 'logo') && (
           <div className="chat-line">
             <label className="field-label" htmlFor="chat-file">
-              {step === 'banner' ? 'Banner' : 'Logo'}
+              {step === 'banner' ? 'Or use your own photo' : 'Logo'}
             </label>
             <input
               id="chat-file"

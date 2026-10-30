@@ -74,3 +74,44 @@
     clip-path: none;
   }
 }
+
+.chat-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.chat-photo {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  border: 2px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--paper);
+  color: var(--ink);
+  text-align: left;
+}
+
+.chat-photo:hover {
+  border-color: var(--sage);
+}
+
+.chat-photo-chosen {
+  border-color: var(--rose-deep);
+  box-shadow: 0 0 0 2px var(--rose-deep);
+}
+
+.chat-photo-img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.chat-photo-label {
+  padding: 0.6rem 0.75rem;
+  min-height: 44px;
+  font-weight: 600;
+}
