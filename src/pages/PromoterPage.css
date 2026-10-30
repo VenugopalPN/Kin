@@ -49,18 +49,31 @@
   gap: 1.25rem;
 }
 
-.promoter-ribbon-row {
+.promoter-send {
   display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 40rem;
+  margin-left: auto;
   padding: 0 clamp(1.25rem, 4vw, 3rem) 2rem;
 }
 
-.promoter-print {
-  width: auto;
-  min-height: 56px;
+.promoter-send-label {
+  margin: 0;
+  font-weight: 700;
+}
+
+.promoter-send-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+.promoter-send-tile,
+.promoter-send-share {
+  width: 100%;
+  min-height: 60px;
+  font-size: 1.05rem;
 }
 
 .promoter-cards {
@@ -100,7 +113,12 @@
     grid-template-columns: 1fr;
   }
 
-  .promoter-ribbon-row .ribbon {
-    width: 100%;
+  .promoter-send {
+    margin-left: 0;
+    max-width: none;
+  }
+
+  .promoter-send-row {
+    grid-template-columns: 1fr;
   }
 }

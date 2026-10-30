@@ -7,6 +7,7 @@ import { useKinData, findSchoolBySlug, findCampaignById, findPromoterById, updat
 import { schoolLook } from '../lib/schoolLook.ts';
 import { absoluteAppUrl } from '../lib/publicUrl.ts';
 import { writeShareMessage, bestTimeSentence, todayAdviceSentence } from '../lib/ai.ts';
+import { canUseNativeShare, smsUrl, whatsappUrl } from '../lib/share.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import './PromoterPage.css';
 
@@ -68,6 +69,14 @@ export function PromoterPage() {
       setTimeout(() => setCopied(false), 2000);
     } catch {
       window.alert(message);
+    }
+  }
+
+  async function handleNativeShare() {
+    try {
+      await navigator.share({ text: message });
+    } catch {
+      // Closing the share sheet is not an error worth showing.
     }
   }
 
@@ -145,13 +154,29 @@ export function PromoterPage() {
           </div>
         </section>
 
-        <div className="promoter-ribbon-row">
-          <button type="button" className="ribbon" onClick={handleCopy}>
-            {copied ? 'Copied!' : 'Copy the message'}
-          </button>
-          <button type="button" className="big-button ghost promoter-print" onClick={handlePrint}>
-            Print the note
-          </button>
+        <div className="promoter-send">
+          <p className="promoter-send-label">Choose how to send it</p>
+          {canUseNativeShare() && (
+            <button type="button" className="ribbon promoter-send-share" onClick={handleNativeShare}>
+              Send the note
+            </button>
+          )}
+          <div className="promoter-send-row">
+            <a className="ribbon promoter-send-tile" href={whatsappUrl(message)} target="_blank" rel="noreferrer">
+              Send on WhatsApp
+            </a>
+            <a className="ribbon promoter-send-tile" href={smsUrl(message)}>
+              Send a text
+            </a>
+          </div>
+          <div className="promoter-send-row">
+            <button type="button" className="big-button ghost promoter-send-tile" onClick={handleCopy} aria-live="polite">
+              {copied ? 'Copied!' : 'Copy the message'}
+            </button>
+            <button type="button" className="big-button ghost promoter-send-tile" onClick={handlePrint}>
+              Print the note
+            </button>
+          </div>
         </div>
 
         <section className="promoter-cards">
