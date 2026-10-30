@@ -7,11 +7,12 @@ import { AdminSidebar } from '../components/AdminSidebar.tsx';
 import { FullScreenWall } from '../components/FullScreenWall.tsx';
 import { ThankYouWall } from '../components/ThankYouWall.tsx';
 import { InlineEditField } from '../components/InlineEditField.tsx';
-import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, updateCampaign, orgAdminSession, leaderboardForCampaign } from '../lib/store.ts';
+import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, updateCampaign, orgAdminSession, leaderboardForCampaign, finishCampaign, isFinished } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
-import { formatMoney } from '../lib/format.ts';
+import { formatDateLong, formatMoney } from '../lib/format.ts';
 import { validateGoal, validateLetter, validateTier, validateTitle } from '../lib/validate.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
+import '../components/FinishedNotice.css';
 import './SchoolAdminPage.css';
 
 export function SchoolAdminPage() {
@@ -22,6 +23,7 @@ export function SchoolAdminPage() {
   const [editingTier, setEditingTier] = useState<number | null>(null);
   const [tierEdit, setTierEdit] = useState<{ value: string; label: string }>({ value: '', label: '' });
   const [tierError, setTierError] = useState<string | undefined>();
+  const [confirmingFinish, setConfirmingFinish] = useState(false);
 
   if (!school) return <NotFoundPage />;
   if (!orgAdminSession(school.id)) {
@@ -92,6 +94,42 @@ export function SchoolAdminPage() {
               validate={(value) => validateGoal(Number(value))}
               onSave={(value) => updateCampaign(campaign.id, { goal: Number(value) })}
             />
+            <div className="manage-finish" aria-live="polite">
+              {isFinished(campaign) ? (
+                <p className="manage-finish-line">
+                  <span className="finished-label">Finished</span> on {formatDateLong(campaign.finishedAt)}. No new gifts
+                  can be made.
+                </p>
+              ) : confirmingFinish ? (
+                <div className="manage-finish-confirm">
+                  <p className="manage-finish-line">
+                    Finish this fundraiser? People won't be able to give after this.
+                  </p>
+                  <div className="manage-finish-actions">
+                    <button
+                      type="button"
+                      className="big-button primary"
+                      onClick={() => {
+                        finishCampaign(campaign.id);
+                        setConfirmingFinish(false);
+                      }}
+                    >
+                      Yes, finish it
+                    </button>
+                    <button type="button" className="link-button" onClick={() => setConfirmingFinish(false)}>
+                      Keep it running
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <p className="manage-finish-line">
+                  Running now.{' '}
+                  <button type="button" className="link-button" onClick={() => setConfirmingFinish(true)}>
+                    Finish it now
+                  </button>
+                </p>
+              )}
+            </div>
           </section>
 
           <section className="manage-ribbon">

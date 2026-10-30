@@ -31,6 +31,7 @@ function normalizeCampaign(campaign: Campaign): Campaign {
   return {
     ...campaign,
     gameId: campaign.gameId === undefined ? 'stars' : campaign.gameId,
+    finishedAt: campaign.finishedAt ?? '',
   };
 }
 
@@ -205,6 +206,7 @@ export function publishCampaign(school: School, cause: string, draft: DraftCampa
     thankYouLine: draft.thankYouLine,
     gameId: draft.gameId,
     publishedAt: new Date().toISOString(),
+    finishedAt: '',
   };
   data = { ...data, campaigns: [...data.campaigns, campaign] };
   persist();
@@ -219,13 +221,27 @@ export function updateCampaign(campaignId: string, patch: Partial<Campaign>) {
   persist();
 }
 
+export function isFinished(campaign: Pick<Campaign, 'finishedAt'>): boolean {
+  return Boolean(campaign.finishedAt);
+}
+
+/** Stops new gifts. There is no reopen: the owner starts a new fundraiser instead. */
+export function finishCampaign(campaignId: string) {
+  const campaign = findCampaignById(campaignId);
+  if (!campaign || isFinished(campaign)) return;
+  updateCampaign(campaignId, { finishedAt: new Date().toISOString() });
+}
+
+/** Returns null when the fundraiser has finished, so no gift is recorded. */
 export function addGift(
   campaignId: string,
   donorFirstName: string,
   amount: number,
   stars: number,
   promoterId = '',
-): Gift {
+): Gift | null {
+  const campaign = findCampaignById(campaignId);
+  if (!campaign || isFinished(campaign)) return null;
   const gift: Gift = {
     id: newId('gift'),
     campaignId,

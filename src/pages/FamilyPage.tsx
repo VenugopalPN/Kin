@@ -4,7 +4,8 @@ import { Tracker } from '../components/Tracker.tsx';
 import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
 import { AmountPicker } from '../components/AmountPicker.tsx';
 import { ProgressBar } from '../components/ProgressBar.tsx';
-import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, addGift } from '../lib/store.ts';
+import { FinishedNotice } from '../components/FinishedNotice.tsx';
+import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, addGift, isFinished } from '../lib/store.ts';
 import { findGame } from '../lib/games.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
@@ -112,6 +113,7 @@ export function FamilyPage() {
   }
 
   const raised = giftsForCampaign(campaign.id).reduce((sum, g) => sum + g.amount, 0);
+  const finished = isFinished(campaign);
   const game = findGame(campaign.gameId);
   const offersGame = Boolean(game);
   const activePath: GivePath = offersGame ? givePath : 'direct';
@@ -127,6 +129,7 @@ export function FamilyPage() {
     event.preventDefault();
     if (!selectedAmount) return;
     const gift = addGift(campaign!.id, donorName, selectedAmount, stars, promoterId);
+    if (!gift) return;
     setLastDonor(gift.donorFirstName);
     setStep('thanks');
   }
@@ -193,7 +196,9 @@ export function FamilyPage() {
       </section>
 
       <section className="family-band">
-        {step === 'give' ? (
+        {step === 'give' && finished ? (
+          <FinishedNotice schoolName={school.name} contactEmail={school.contactEmail} />
+        ) : step === 'give' ? (
           <form onSubmit={handleGive} className="family-form">
             {showPathChoice && (
               <div className="family-path-choice" role="group" aria-label="How would you like to give?">
@@ -258,9 +263,11 @@ export function FamilyPage() {
           <div className="family-thanks">
             <h2 className="family-thanks-title">Thank you, {lastDonor}!</h2>
             <p className="muted">— {campaign.childFirstName}</p>
-            <button type="button" className="ribbon" onClick={handleGiveAgain}>
-              Give again
-            </button>
+            {!finished && (
+              <button type="button" className="ribbon" onClick={handleGiveAgain}>
+                Give again
+              </button>
+            )}
           </div>
         )}
       </section>

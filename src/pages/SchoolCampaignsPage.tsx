@@ -14,7 +14,9 @@ import {
   publishCampaign,
   updateSchool,
   orgAdminSession,
+  isFinished,
 } from '../lib/store.ts';
+import '../components/FinishedNotice.css';
 import { draftCampaignFromCause, type DraftCampaign } from '../lib/ai.ts';
 import { GAME_CATALOG } from '../lib/games.ts';
 import { hasErrors, validateCampaignFields, type CampaignErrors } from '../lib/validate.ts';
@@ -193,7 +195,7 @@ export function SchoolCampaignsPage() {
 
                   <div className="stat-row">
                     <StatCard label="Raised" value={formatMoney(totalRaised)} />
-                    <StatCard label="Active fundraisers" value={String(campaigns.length)} />
+                    <StatCard label="Active fundraisers" value={String(campaigns.filter((c) => !isFinished(c)).length)} />
                     <StatCard label="Donors" value={String(totalDonors)} />
                   </div>
 
@@ -207,6 +209,7 @@ export function SchoolCampaignsPage() {
                               <div className="list-tile-photo" aria-hidden="true" />
                               <div className="list-tile-body">
                                 <p className="campaign-list-title">{campaign.title}</p>
+                                {isFinished(campaign) && <span className="finished-label">Finished</span>}
                                 <ProgressBar raised={raised} goal={campaign.goal} />
                                 <p className="muted" style={{ margin: 0 }}>
                                   {formatMoney(raised)} raised of {formatMoney(campaign.goal)}

@@ -410,3 +410,40 @@
 .admin-tier-error {
   flex-basis: 100%;
 }
+
+.manage-finish {
+  margin-top: 0.75rem;
+}
+
+.manage-finish-line {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.manage-finish-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 2px solid var(--rose-darker);
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.manage-finish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.manage-finish-actions .big-button {
+  width: auto;
+}
+
+.manage-finish .link-button {
+  min-height: 44px;
+}

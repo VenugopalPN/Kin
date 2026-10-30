@@ -1,0 +1,33 @@
+.finished-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.finished-notice p {
+  margin: 0;
+}
+
+.finished-notice-title {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+.finished-notice-link {
+  font-weight: 600;
+  color: var(--rose-darker);
+  text-underline-offset: 3px;
+}
+
+.finished-label {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 0 0.9rem;
+  border-radius: 999px;
+  background: var(--sage-deep);
+  color: var(--paper);
+  font-weight: 700;
+  font-size: 0.95rem;
+}

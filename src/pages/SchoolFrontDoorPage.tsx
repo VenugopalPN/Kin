@@ -2,7 +2,8 @@ import { Link, useParams } from 'react-router-dom';
 import { Tracker } from '../components/Tracker.tsx';
 import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
 import { ProgressBar } from '../components/ProgressBar.tsx';
-import { useKinData, findSchoolBySlug, campaignsForSchool, giftsForCampaign } from '../lib/store.ts';
+import { useKinData, findSchoolBySlug, campaignsForSchool, giftsForCampaign, isFinished } from '../lib/store.ts';
+import '../components/FinishedNotice.css';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { formatMoney } from '../lib/format.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
@@ -15,8 +16,11 @@ export function SchoolFrontDoorPage() {
 
   if (!school) return <NotFoundPage />;
 
-  const campaigns = campaignsForSchool(school.id);
+  const all = campaignsForSchool(school.id);
+  // A running fundraiser always leads; finished ones follow, newest first.
+  const campaigns = [...all.filter((c) => !isFinished(c)), ...all.filter(isFinished)];
   const [campaign, ...others] = campaigns;
+  const heroOpen = campaign ? !isFinished(campaign) : false;
   const gifts = campaign ? giftsForCampaign(campaign.id) : [];
   const raised = gifts.reduce((sum, g) => sum + g.amount, 0);
 
@@ -26,7 +30,7 @@ export function SchoolFrontDoorPage() {
         label="Generic page"
         description="This is the public page."
         action={
-          campaign && (
+          heroOpen && (
             <Link to={`/s/${school.slug}/give/${campaign.id}`} className="pill-outline">
               Give
             </Link>
@@ -59,9 +63,13 @@ export function SchoolFrontDoorPage() {
                 </p>
                 <ProgressBar raised={raised} goal={campaign.goal} />
                 <p className="muted front-give-donors">{gifts.length} donors</p>
-                <Link to={`/s/${school.slug}/give/${campaign.id}`} className="ribbon front-give-cta">
-                  Give now
-                </Link>
+                {heroOpen ? (
+                  <Link to={`/s/${school.slug}/give/${campaign.id}`} className="ribbon front-give-cta">
+                    Give now
+                  </Link>
+                ) : (
+                  <p className="finished-label">Finished. Thank you to everyone who gave.</p>
+                )}
               </div>
             </>
           ) : (
@@ -91,7 +99,15 @@ export function SchoolFrontDoorPage() {
       {others.length > 0 && (
         <section className="front-also">
           <h2 className="front-also-title">
-            Also raising <span className="accent">right now</span>
+            {others.some(isFinished) ? (
+              <>
+                Our other <span className="accent">fundraisers</span>
+              </>
+            ) : (
+              <>
+                Also raising <span className="accent">right now</span>
+              </>
+            )}
           </h2>
           <ul className="front-also-list">
             {others.map((other) => {
@@ -104,9 +120,13 @@ export function SchoolFrontDoorPage() {
                     <p className="front-also-meta">
                       {formatMoney(otherRaised)} of {formatMoney(other.goal)}
                     </p>
-                    <Link to={`/s/${school.slug}/give/${other.id}`} className="big-button ghost front-also-give">
-                      Give
-                    </Link>
+                    {isFinished(other) ? (
+                      <span className="finished-label">Finished</span>
+                    ) : (
+                      <Link to={`/s/${school.slug}/give/${other.id}`} className="big-button ghost front-also-give">
+                        Give
+                      </Link>
+                    )}
                   </div>
                 </li>
               );

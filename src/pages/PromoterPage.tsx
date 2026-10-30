@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { useParams, useSearchParams } from 'react-router-dom';
 import { Tracker } from '../components/Tracker.tsx';
 import { ResetDemoButton } from '../components/ResetDemoButton.tsx';
-import { useKinData, findSchoolBySlug, findCampaignById, findPromoterById, updateCampaign } from '../lib/store.ts';
+import { FinishedNotice } from '../components/FinishedNotice.tsx';
+import { useKinData, findSchoolBySlug, findCampaignById, findPromoterById, updateCampaign, isFinished } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { absoluteAppUrl } from '../lib/publicUrl.ts';
 import { writeShareMessage, bestTimeSentence, todayAdviceSentence } from '../lib/ai.ts';
@@ -27,6 +28,20 @@ export function PromoterPage() {
           <div className="sheet" style={{ textAlign: 'center' }}>
             <h1 style={{ marginBottom: '1rem' }}>That link doesn't work</h1>
             <p className="muted">Ask {school.name} for a current fundraiser link.</p>
+          </div>
+        </div>
+        <ResetDemoButton />
+      </div>
+    );
+  }
+
+  if (isFinished(campaign)) {
+    return (
+      <div className={`app-field page-cream${school.bannerImage ? ' site-has-banner' : ''}`} style={schoolLook(school)}>
+        <Tracker label="Send the note" description="This fundraiser has finished." />
+        <div className="sheet-stack">
+          <div className="sheet">
+            <FinishedNotice schoolName={school.name} contactEmail={school.contactEmail} />
           </div>
         </div>
         <ResetDemoButton />

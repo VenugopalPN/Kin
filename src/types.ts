@@ -20,6 +20,8 @@ export interface Campaign {
   /** Catalog game id, or null for direct donation only. */
   gameId: string | null;
   publishedAt: string;
+  /** '' while the fundraiser is running; set once the owner finishes it. */
+  finishedAt: string;
 }
 
 export interface School {
