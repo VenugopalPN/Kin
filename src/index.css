@@ -17,7 +17,8 @@
   --sage-deep: #2f4a3b;
   --rose: #c1595a;
   --rose-deep: #a4423f;
-  --accent: var(--rose);
+  --rose-darker: #8a332f;
+  --accent: var(--rose-deep);
   --line: #ddd2c3;
   --muted: #7a6f63;
 
@@ -126,7 +127,7 @@ a {
 
 .kicker {
   margin: 0 0 0.75rem;
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -161,7 +162,7 @@ a {
   border: 1.5px solid var(--ink);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
   letter-spacing: 0;
   text-transform: none;
   text-decoration: none;
@@ -173,14 +174,14 @@ a {
 }
 
 .big-button.primary {
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
-  border-color: var(--rose);
+  border-color: var(--rose-deep);
 }
 
 .big-button.primary:hover {
-  background: var(--rose-deep);
-  border-color: var(--rose-deep);
+  background: var(--rose-darker);
+  border-color: var(--rose-darker);
 }
 
 .big-button.ghost {
@@ -198,9 +199,9 @@ a {
 .big-button:disabled:hover {
   opacity: 0.4;
   cursor: not-allowed;
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
-  border-color: var(--rose);
+  border-color: var(--rose-deep);
 }
 
 .ribbon {
@@ -211,7 +212,7 @@ a {
   padding: 0.85rem 2rem;
   border: 0;
   border-radius: 999px;
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
@@ -223,14 +224,14 @@ a {
 }
 
 .ribbon:hover {
-  background: var(--rose-deep);
+  background: var(--rose-darker);
 }
 
 .ribbon:disabled,
 .ribbon:disabled:hover {
   opacity: 0.4;
   cursor: not-allowed;
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
 }
 
@@ -240,13 +241,13 @@ a {
   justify-content: center;
   min-height: 44px;
   padding: 0 1.4rem;
-  border: 1.5px solid var(--rose);
+  border: 1.5px solid var(--rose-deep);
   border-radius: 999px;
   background: transparent;
   color: var(--rose-deep);
   font-family: 'Inter', sans-serif;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 1rem;
   text-decoration: none;
   cursor: pointer;
   transition:
@@ -255,7 +256,7 @@ a {
 }
 
 .pill-outline:hover {
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
 }
 
@@ -267,12 +268,12 @@ a {
   padding: 0;
   text-decoration: underline;
   text-underline-offset: 3px;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .field-label {
   display: block;
-  font-size: 0.76rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -361,11 +362,21 @@ a {
   align-items: center;
   border-radius: 6px;
   padding: 0.25rem 0.55rem;
-  font-size: 0.74rem;
+  font-size: 0.9rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   background: #fff4d4;
   color: #6e4e0c;
   border: 1px dashed #d9b55a;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

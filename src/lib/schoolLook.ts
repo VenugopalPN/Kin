@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 import { appPath } from './publicUrl.ts';
 import type { School } from '../types.ts';
 
-export const DEFAULT_ACCENT = '#c1595a';
+export const DEFAULT_ACCENT = '#a4423f';
 const DEFAULT_BANNER = '/cover.jpg';
 
 export function schoolLook(school: Pick<School, 'accentColor' | 'bannerImage'>): CSSProperties {

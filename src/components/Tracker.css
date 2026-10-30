@@ -17,7 +17,7 @@
 
 .tracker-step {
   font-weight: 700;
-  font-size: 0.74rem;
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--rose-deep);
@@ -31,7 +31,7 @@
 .tracker-sentence {
   margin: 0;
   color: var(--muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .tracker-action {
