@@ -390,3 +390,23 @@
     grid-template-columns: 1fr;
   }
 }
+
+.manage-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.manage-hero-card .inline-edit-show {
+  background: transparent;
+  padding-left: 0;
+}
+
+.manage-hero-card .inline-edit-show:hover {
+  background: var(--mist);
+}
+
+.admin-tier-error {
+  flex-basis: 100%;
+}

@@ -6,9 +6,11 @@ import { ProgressBar } from '../components/ProgressBar.tsx';
 import { AdminSidebar } from '../components/AdminSidebar.tsx';
 import { FullScreenWall } from '../components/FullScreenWall.tsx';
 import { ThankYouWall } from '../components/ThankYouWall.tsx';
+import { InlineEditField } from '../components/InlineEditField.tsx';
 import { useKinData, findSchoolBySlug, findCampaignById, giftsForCampaign, updateCampaign, orgAdminSession, leaderboardForCampaign } from '../lib/store.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { formatMoney } from '../lib/format.ts';
+import { validateGoal, validateLetter, validateTier, validateTitle } from '../lib/validate.ts';
 import { NotFoundPage } from './NotFoundPage.tsx';
 import './SchoolAdminPage.css';
 
@@ -19,6 +21,7 @@ export function SchoolAdminPage() {
   const [showWall, setShowWall] = useState(false);
   const [editingTier, setEditingTier] = useState<number | null>(null);
   const [tierEdit, setTierEdit] = useState<{ value: string; label: string }>({ value: '', label: '' });
+  const [tierError, setTierError] = useState<string | undefined>();
 
   if (!school) return <NotFoundPage />;
   if (!orgAdminSession(school.id)) {
@@ -35,13 +38,19 @@ export function SchoolAdminPage() {
   function startEditingTier(index: number) {
     const tier = campaign!.amounts[index];
     setEditingTier(index);
+    setTierError(undefined);
     setTierEdit({ value: String(tier.value), label: tier.label });
   }
 
   function saveTier() {
     if (editingTier === null) return;
-    const value = Number(tierEdit.value) || campaign!.amounts[editingTier].value;
-    const label = tierEdit.label.trim() || `$${value}`;
+    const value = Number(tierEdit.value);
+    const label = tierEdit.label.trim();
+    const problem = validateTier({ value, label });
+    if (problem) {
+      setTierError(problem);
+      return;
+    }
     const amounts = campaign!.amounts.map((tier, index) => (index === editingTier ? { value, label } : tier));
     updateCampaign(campaign!.id, { amounts });
     setEditingTier(null);
@@ -59,11 +68,30 @@ export function SchoolAdminPage() {
           </Link>
 
           <section className="manage-hero-card">
-            <h1>{campaign.title}</h1>
+            <h1 className="visually-hidden">{campaign.title}</h1>
+            <InlineEditField
+              key={`title-${campaign.id}`}
+              id="manage-title"
+              label="Title"
+              value={campaign.title}
+              display={<span className="manage-title">{campaign.title}</span>}
+              validate={validateTitle}
+              onSave={(title) => updateCampaign(campaign.id, { title })}
+            />
             <p className="admin-raised">
               {formatMoney(raised)} raised of {formatMoney(campaign.goal)}
             </p>
             <ProgressBar raised={raised} goal={campaign.goal} />
+            <InlineEditField
+              key={`goal-${campaign.id}`}
+              id="manage-goal"
+              label="Fundraising goal"
+              value={String(campaign.goal)}
+              display={`Goal: ${formatMoney(campaign.goal)}`}
+              numeric
+              validate={(value) => validateGoal(Number(value))}
+              onSave={(value) => updateCampaign(campaign.id, { goal: Number(value) })}
+            />
           </section>
 
           <section className="manage-ribbon">
@@ -82,7 +110,16 @@ export function SchoolAdminPage() {
 
           <section className="manage-body">
             <div>
-              <p className="manage-letter">{campaign.letterBody}</p>
+              <InlineEditField
+                key={`letter-${campaign.id}`}
+                id="manage-letter"
+                label="Letter"
+                value={campaign.letterBody}
+                display={<span className="manage-letter">{campaign.letterBody}</span>}
+                multiline
+                validate={validateLetter}
+                onSave={(letterBody) => updateCampaign(campaign.id, { letterBody })}
+              />
               <p className="muted admin-share-note">
                 Each promoter gets their own link, so you can see who brought in each gift.
               </p>
@@ -107,6 +144,11 @@ export function SchoolAdminPage() {
                       <button type="button" className="big-button primary" onClick={saveTier}>
                         Save
                       </button>
+                      {tierError && (
+                        <p className="field-error admin-tier-error" role="alert">
+                          {tierError}
+                        </p>
+                      )}
                     </div>
                   ) : (
                     <button key={index} type="button" className="admin-tier" onClick={() => startEditingTier(index)}>

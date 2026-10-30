@@ -1,0 +1,67 @@
+.inline-edit {
+  margin: 0 0 0.5rem;
+}
+
+.inline-edit-show {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  min-height: 52px;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 10px;
+  background: var(--mist);
+  color: var(--ink);
+  font-weight: 500;
+  text-align: left;
+}
+
+.inline-edit-show:hover {
+  background: var(--line);
+}
+
+.inline-edit-value {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.inline-edit-saved {
+  margin: 0.35rem 0 0;
+  min-height: 0;
+  color: var(--sage-deep);
+  font-weight: 600;
+}
+
+.inline-edit-saved:empty {
+  display: none;
+}
+
+.inline-edit-open {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+}
+
+.inline-edit-open .field-label {
+  margin-bottom: 0;
+}
+
+.inline-edit-textarea {
+  min-height: 7rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  resize: vertical;
+}
+
+.inline-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.inline-edit-actions .big-button {
+  width: auto;
+}
