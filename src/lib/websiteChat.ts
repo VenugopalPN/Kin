@@ -46,7 +46,7 @@ export function promptFor(step: ChatStep, draft: ChatDraft, mode: ChatMode = 'cr
     case 'email':
       return 'A contact email for the public page?';
     case 'banner':
-      return 'Upload a banner photo, or skip to keep the current cover.';
+      return 'Pick a photo for the top of the page, or skip to keep the current one.';
     case 'logo':
       return 'Upload a logo, or skip this.';
     case 'confirm':
@@ -119,6 +119,13 @@ export function replyToImage(
     return { draft: { ...draft, bannerImage: image }, reply: 'Banner added', next: 'logo' };
   }
   return { draft: { ...draft, logoImage: image }, reply: 'Logo added', next: 'confirm' };
+}
+
+export function replyToStockPhoto(
+  draft: ChatDraft,
+  photo: { label: string; src: string },
+): { draft: ChatDraft; reply: string; next: ChatStep } {
+  return { draft: { ...draft, bannerImage: photo.src }, reply: photo.label, next: 'logo' };
 }
 
 export function replyToSkip(

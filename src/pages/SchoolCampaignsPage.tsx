@@ -14,9 +14,12 @@ import {
   publishCampaign,
   updateSchool,
   orgAdminSession,
+  isFinished,
 } from '../lib/store.ts';
+import '../components/FinishedNotice.css';
 import { draftCampaignFromCause, type DraftCampaign } from '../lib/ai.ts';
 import { GAME_CATALOG } from '../lib/games.ts';
+import { hasErrors, validateCampaignFields, type CampaignErrors } from '../lib/validate.ts';
 import { schoolLook } from '../lib/schoolLook.ts';
 import { formatMoney } from '../lib/format.ts';
 import { emptyDraft, type ChatDraft } from '../lib/websiteChat.ts';
@@ -39,6 +42,7 @@ export function SchoolCampaignsPage() {
   const [goalOverride, setGoalOverride] = useState<string | null>(null);
   const [amountsOverride, setAmountsOverride] = useState<AmountTier[] | null>(null);
   const [gameIdOverride, setGameIdOverride] = useState<string | null | undefined>(undefined);
+  const [triedToPublish, setTriedToPublish] = useState(false);
   const autoDraft = useMemo(() => draftCampaignFromCause(cause, school?.name ?? ''), [cause, school?.name]);
 
   useEffect(() => {
@@ -77,10 +81,18 @@ export function SchoolCampaignsPage() {
     gameId: gameIdOverride === undefined ? autoDraft.gameId : gameIdOverride,
   };
   const goalInputValue = goalOverride ?? String(draft.goal);
+  const fields = {
+    title: draft.title,
+    letterBody: draft.letterBody,
+    goal: Number(goalInputValue),
+    amounts: draft.amounts,
+  };
+  const errors: CampaignErrors = triedToPublish ? validateCampaignFields(fields) : {};
 
   function handleCauseChange(value: string) {
     setCause(value);
     if (!value.trim()) {
+      setTriedToPublish(false);
       setTitleOverride(null);
       setLetterOverride(null);
       setGoalOverride(null);
@@ -96,6 +108,7 @@ export function SchoolCampaignsPage() {
 
   function handleCancelCreate() {
     setCreating(false);
+    setTriedToPublish(false);
     setCause('');
     setTitleOverride(null);
     setLetterOverride(null);
@@ -107,14 +120,18 @@ export function SchoolCampaignsPage() {
   function handleCreate(event: FormEvent) {
     event.preventDefault();
     if (!cause.trim()) return;
+    const found = validateCampaignFields(fields);
+    if (hasErrors(found)) {
+      setTriedToPublish(true);
+      document.getElementById(firstErrorFieldId(found))?.focus();
+      return;
+    }
     const finalDraft: DraftCampaign = {
       ...draft,
-      title: draft.title.trim() || autoDraft.title,
-      letterBody: draft.letterBody.trim() || autoDraft.letterBody,
-      amounts: draft.amounts.map((tier, index) => {
-        const value = tier.value > 0 ? tier.value : autoDraft.amounts[index].value;
-        return { value, label: tier.label.trim() || `$${value}` };
-      }),
+      title: draft.title.trim(),
+      letterBody: draft.letterBody.trim(),
+      goal: fields.goal,
+      amounts: draft.amounts.map((tier) => ({ value: tier.value, label: tier.label.trim() })),
     };
     const campaign = publishCampaign(school!, cause, finalDraft);
     navigate(`/s/${school!.slug}/admin/${campaign.id}`);
@@ -178,7 +195,7 @@ export function SchoolCampaignsPage() {
 
                   <div className="stat-row">
                     <StatCard label="Raised" value={formatMoney(totalRaised)} />
-                    <StatCard label="Active fundraisers" value={String(campaigns.length)} />
+                    <StatCard label="Active fundraisers" value={String(campaigns.filter((c) => !isFinished(c)).length)} />
                     <StatCard label="Donors" value={String(totalDonors)} />
                   </div>
 
@@ -192,6 +209,7 @@ export function SchoolCampaignsPage() {
                               <div className="list-tile-photo" aria-hidden="true" />
                               <div className="list-tile-body">
                                 <p className="campaign-list-title">{campaign.title}</p>
+                                {isFinished(campaign) && <span className="finished-label">Finished</span>}
                                 <ProgressBar raised={raised} goal={campaign.goal} />
                                 <p className="muted" style={{ margin: 0 }}>
                                   {formatMoney(raised)} raised of {formatMoney(campaign.goal)}
@@ -245,6 +263,7 @@ export function SchoolCampaignsPage() {
                       cause={cause}
                       draft={draft}
                       goalInputValue={goalInputValue}
+                      errors={errors}
                       onTitleChange={setTitleOverride}
                       onLetterChange={setLetterOverride}
                       onGoalChange={setGoalOverride}
@@ -264,10 +283,28 @@ export function SchoolCampaignsPage() {
   );
 }
 
+function firstErrorFieldId(errors: CampaignErrors): string {
+  if (errors.title) return 'draft-title';
+  if (errors.letterBody) return 'draft-letter';
+  if (errors.goal) return 'draft-goal';
+  const tier = errors.amounts?.findIndex(Boolean) ?? -1;
+  return tier >= 0 ? `draft-tier-${tier}` : 'draft-title';
+}
+
+function FieldError({ id, message }: { id: string; message?: string }) {
+  if (!message) return null;
+  return (
+    <p className="field-error" id={id} role="alert">
+      {message}
+    </p>
+  );
+}
+
 interface DraftPreviewProps {
   cause: string;
   draft: DraftCampaign;
   goalInputValue: string;
+  errors: CampaignErrors;
   onTitleChange: (value: string) => void;
   onLetterChange: (value: string) => void;
   onGoalChange: (value: string) => void;
@@ -279,6 +316,7 @@ function DraftPreview({
   cause,
   draft,
   goalInputValue,
+  errors,
   onTitleChange,
   onLetterChange,
   onGoalChange,
@@ -300,7 +338,10 @@ function DraftPreview({
         className="text-input draft-title-input"
         value={draft.title}
         onChange={(e) => onTitleChange(e.target.value)}
+        aria-invalid={Boolean(errors.title)}
+        aria-describedby={errors.title ? 'draft-title-error' : undefined}
       />
+      <FieldError id="draft-title-error" message={errors.title} />
 
       <label className="field-label" htmlFor="draft-letter">
         Letter
@@ -311,7 +352,10 @@ function DraftPreview({
         value={draft.letterBody}
         onChange={(e) => onLetterChange(e.target.value)}
         rows={4}
+        aria-invalid={Boolean(errors.letterBody)}
+        aria-describedby={errors.letterBody ? 'draft-letter-error' : undefined}
       />
+      <FieldError id="draft-letter-error" message={errors.letterBody} />
 
       <label className="field-label" htmlFor="draft-goal">
         Fundraising goal
@@ -321,19 +365,28 @@ function DraftPreview({
         className="text-input draft-goal-input"
         type="number"
         min="1"
+        inputMode="numeric"
         value={goalInputValue}
         onChange={(e) => onGoalChange(e.target.value)}
+        aria-invalid={Boolean(errors.goal)}
+        aria-describedby={errors.goal ? 'draft-goal-error' : undefined}
       />
+      <FieldError id="draft-goal-error" message={errors.goal} />
 
       <p className="field-label draft-tiers-label">Gift amounts</p>
       <div className="draft-tiers">
         {draft.amounts.map((tier, index) => (
-          <div key={index} className="admin-tier-edit draft-tier">
+          <div key={index} className="draft-tier-group">
+          <div className="admin-tier-edit draft-tier">
             <input
+              id={`draft-tier-${index}`}
               className="text-input"
               type="number"
               min="1"
-              value={tier.value}
+              inputMode="numeric"
+              aria-invalid={Boolean(errors.amounts?.[index])}
+              aria-describedby={errors.amounts?.[index] ? `draft-tier-${index}-error` : undefined}
+              value={tier.value || ''}
               onChange={(e) => onTierChange(index, { value: Number(e.target.value) || 0 })}
               aria-label={`Tier ${index + 1} amount`}
             />
@@ -343,6 +396,8 @@ function DraftPreview({
               onChange={(e) => onTierChange(index, { label: e.target.value })}
               aria-label={`Tier ${index + 1} label`}
             />
+          </div>
+          <FieldError id={`draft-tier-${index}-error`} message={errors.amounts?.[index]} />
           </div>
         ))}
       </div>

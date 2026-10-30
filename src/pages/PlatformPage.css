@@ -75,7 +75,7 @@
 .platform-tile-link {
   margin-top: auto;
   padding: 0.9rem 1rem 1.1rem;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -115,7 +115,7 @@
 }
 
 .credential-list dt {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;

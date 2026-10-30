@@ -45,6 +45,7 @@ export function buildSeedData(): KinData {
         thankYouLine: 'Thank you for helping our class.',
         gameId: 'stars',
         publishedAt: minutesAgo(480),
+        finishedAt: '',
       },
       {
         id: 'campaign_wattle_sports',
@@ -67,6 +68,7 @@ export function buildSeedData(): KinData {
         thankYouLine: 'Thank you for helping our team.',
         gameId: 'stars',
         publishedAt: minutesAgo(120),
+        finishedAt: '',
       },
     ],
     promoters: [

@@ -107,7 +107,7 @@
   border-radius: 999px;
   background: var(--accent);
   color: var(--paper);
-  font-size: 0.65rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -115,7 +115,7 @@
 }
 
 .cp-leader-gifts {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .cp-leader-total {
@@ -217,7 +217,7 @@
 }
 
 .cp-status {
-  font-size: 0.72rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--sage-deep);
   text-align: right;
@@ -264,7 +264,7 @@
 .cp-link {
   display: block;
   margin: 0.1rem 0 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   word-break: break-all;
   color: var(--sage-deep);
   font-weight: 600;

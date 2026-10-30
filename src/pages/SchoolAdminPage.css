@@ -9,7 +9,7 @@
 .admin-back-link {
   display: inline-block;
   margin-bottom: 1.25rem;
-  font-size: 0.78rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -117,7 +117,7 @@
 
 .website-preview-line {
   margin: 0.15rem 0 0;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
 }
 
 /* Create-a-fundraiser flow */
@@ -155,7 +155,7 @@
 
 .draft-kicker {
   margin: 0 0 0.75rem;
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -246,7 +246,7 @@
 
 .draft-game-blurb {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1rem;
 }
 
 /* Manage a single fundraiser */
@@ -315,7 +315,7 @@
 .admin-share-open {
   color: var(--muted);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 .admin-tiers {
@@ -343,7 +343,7 @@
 }
 
 .admin-tier-change {
-  font-size: 0.75rem;
+  font-size: 0.95rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -389,4 +389,61 @@
   .platform-form-band {
     grid-template-columns: 1fr;
   }
+}
+
+.manage-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.manage-hero-card .inline-edit-show {
+  background: transparent;
+  padding-left: 0;
+}
+
+.manage-hero-card .inline-edit-show:hover {
+  background: var(--mist);
+}
+
+.admin-tier-error {
+  flex-basis: 100%;
+}
+
+.manage-finish {
+  margin-top: 0.75rem;
+}
+
+.manage-finish-line {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.manage-finish-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 2px solid var(--rose-darker);
+  border-radius: 12px;
+  background: var(--paper);
+}
+
+.manage-finish-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.manage-finish-actions .big-button {
+  width: auto;
+}
+
+.manage-finish .link-button {
+  min-height: 44px;
 }

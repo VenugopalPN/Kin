@@ -14,7 +14,7 @@
 
 .front-hero-kicker {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -84,7 +84,7 @@
 }
 
 .front-manage {
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
@@ -150,7 +150,7 @@
 }
 
 .front-quote {
-  background: var(--rose);
+  background: var(--rose-deep);
   color: var(--paper);
   padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3.5rem);
 }

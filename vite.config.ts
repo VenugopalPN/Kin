@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { copyFileSync, existsSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
@@ -36,5 +37,9 @@ export default defineConfig({
   server: {
     port: 4322,
     host: '127.0.0.1',
+  },
+  test: {
+    environment: 'jsdom',
+    include: ['src/**/*.test.ts'],
   },
 });
